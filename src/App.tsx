@@ -1,25 +1,54 @@
 import React from 'react'
 
-import { appReducer, AppState } from './state/appContext'
+import { appReducer, initialState } from './state/appContext'
+import { checkGame, getGameResult, getNewSquaresArray, getNextPlayer } from './util'
+
 import Board from './components/Board'
 
 import './App.scss'
-
-const initialState: AppState = {
-  squaresArray: new Array(9).fill(''),
-  step: 0,
-  isGameOver: false,
-  winner: '',
-  currentPlayer: 'x',
-}
 
 const App: React.FC = () => {
   const [state, dispatch] = React.useReducer(appReducer, initialState)
   const { currentPlayer, squaresArray, step, isGameOver, winner } = state
 
+  const resetGame = () => {
+    dispatch({ type: 'ResetGame' })
+  }
+
+  const handleSquareClick = (square: number) => {
+    if (squaresArray[square] !== '' || isGameOver) return
+
+    const nextPlayer = getNextPlayer(currentPlayer)
+    const newSquaresArray = getNewSquaresArray(squaresArray, currentPlayer, square)
+
+    dispatch({
+      type: 'GameTick',
+      payload: { step: step + 1, currentPlayer: nextPlayer, squaresArray: newSquaresArray },
+    })
+  }
+
+  React.useEffect(() => {
+    if (step > 4) {
+      const gameOver = checkGame(squaresArray)
+      if (gameOver) {
+        dispatch({ type: 'GameOver', payload: { winner: getNextPlayer(currentPlayer) } })
+      }
+    }
+  }, [step]) // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
-    <div className="App">
-      <Board squaresArray={squaresArray} onSquareClick={(index) => console.log('square clicked', index)} />
+    <div className="App container">
+      <h1 className="title">Tic Tac Toe</h1>
+      {!isGameOver ? (
+        <h2 className="current-player">{`It's ${currentPlayer} turn`}</h2>
+      ) : (
+        <h2>{getGameResult(winner)}</h2>
+      )}
+      <Board squaresArray={squaresArray} onSquareClick={handleSquareClick} />
+
+      <button className="reset-btn" type="button" onClick={resetGame}>
+        Reset Game
+      </button>
     </div>
   )
 }
