@@ -4,7 +4,7 @@ import Square from './Square'
 import './Board.scss'
 
 type BoardProps = {
-  squaresArray: Array<string>
+  squaresArray: string[]
   onSquareClick(index: number): void
 }
 
