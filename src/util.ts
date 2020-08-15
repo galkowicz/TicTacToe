@@ -14,8 +14,9 @@ export const getNewSquaresArray = (squaresArray: string[], currentPlayer: Player
   return newSquaresArray
 }
 
-export const checkGame = (squaresArray: string[]): boolean => {
+export const checkGame = (squaresArray: string[]): [boolean, number] => {
   let isGameOver = false
+  let winningLine = -1
 
   const winningConditions = [
     [0, 1, 2],
@@ -28,7 +29,7 @@ export const checkGame = (squaresArray: string[]): boolean => {
     [2, 4, 6],
   ]
 
-  for (let i = 0; i <= winningConditions.length - 1; i += 1) {
+  for (let i = 0; i < winningConditions.length; i += 1) {
     const winCondition = winningConditions[i]
 
     const a = squaresArray[winCondition[0]]
@@ -39,11 +40,12 @@ export const checkGame = (squaresArray: string[]): boolean => {
 
     if (!isRowEmpty && a === b && b === c) {
       isGameOver = true
+      winningLine = i
       break
     }
   }
 
-  return isGameOver
+  return [isGameOver, winningLine]
 }
 
 export const getGameResult = (winner: Player | ''): string => {

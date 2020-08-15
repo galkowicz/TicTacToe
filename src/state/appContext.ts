@@ -6,6 +6,7 @@ export type AppState = {
   squaresArray: string[]
   step: number
   isGameOver: boolean
+  winningLine: number
   readonly winner: '' | 'o' | 'x'
   readonly currentPlayer: Player
 }
@@ -16,6 +17,7 @@ export const initialState: AppState = {
   isGameOver: false,
   winner: '',
   currentPlayer: 'x',
+  winningLine: -1,
 }
 
 export const appReducer = (state: AppState, action: AppActions): AppState => {
@@ -26,7 +28,9 @@ export const appReducer = (state: AppState, action: AppActions): AppState => {
       return { ...state, step, currentPlayer, squaresArray }
     }
     case 'GameOver': {
-      return { ...state, isGameOver: true, winner: action.payload.winner }
+      const { winningLine, winner } = action.payload
+
+      return { ...state, isGameOver: true, winner, winningLine }
     }
     case 'ResetGame': {
       return { ...initialState }

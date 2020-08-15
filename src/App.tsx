@@ -9,7 +9,7 @@ import './App.scss'
 
 const App: React.FC = () => {
   const [state, dispatch] = React.useReducer(appReducer, initialState)
-  const { currentPlayer, squaresArray, step, isGameOver, winner } = state
+  const { currentPlayer, squaresArray, step, isGameOver, winner, winningLine } = state
 
   const resetGame = () => {
     dispatch({ type: 'ResetGame' })
@@ -29,9 +29,9 @@ const App: React.FC = () => {
 
   React.useEffect(() => {
     if (step > 4) {
-      const gameOver = checkGame(squaresArray)
+      const [gameOver, winningLineIndex] = checkGame(squaresArray)
       if (gameOver) {
-        dispatch({ type: 'GameOver', payload: { winner: getNextPlayer(currentPlayer) } })
+        dispatch({ type: 'GameOver', payload: { winner: getNextPlayer(currentPlayer), winningLine: winningLineIndex } })
       }
     }
   }, [step]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -44,7 +44,7 @@ const App: React.FC = () => {
       ) : (
         <h2>{getGameResult(winner)}</h2>
       )}
-      <Board squaresArray={squaresArray} onSquareClick={handleSquareClick} />
+      <Board squaresArray={squaresArray} onSquareClick={handleSquareClick} winningLine={winningLine} />
 
       <button className="reset-btn" type="button" onClick={resetGame}>
         Reset Game

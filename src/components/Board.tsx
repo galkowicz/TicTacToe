@@ -6,16 +6,20 @@ import './Board.scss'
 type BoardProps = {
   squaresArray: string[]
   onSquareClick(index: number): void
+  winningLine: number
 }
 
-const Board: React.FC<BoardProps> = ({ squaresArray, onSquareClick }) => {
+const Board: React.FC<BoardProps> = ({ squaresArray, onSquareClick, winningLine }) => {
   return (
-    <div className="board">
-      {squaresArray.map((square, index) => {
-        // eslint-disable-next-line react/no-array-index-key
-        return <Square key={index} value={square} onClick={() => onSquareClick(index)} />
-      })}
-    </div>
+    <>
+      <div className={`win${winningLine}`} />
+      <div className="board">
+        {squaresArray.map((square, index) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <Square key={index} value={square} onClick={() => onSquareClick(index)} />
+        })}
+      </div>
+    </>
   )
 }
 

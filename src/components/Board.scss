@@ -1,6 +1,46 @@
+@mixin winningLine($top, $left) {
+  position: relative;
+  z-index: 10;
+  width: 275px;
+  height: 2px;
+  top: $top;
+  left: $left;
+  background-color: green;
+}
+
 .board {
   display: grid;
   width: 300px;
   height: 300px;
   grid-template-columns: auto auto auto;
+}
+
+.win0 {
+  @include winningLine(57px, 12px);
+}
+.win1 {
+  @include winningLine(157px, 12px);
+}
+.win2 {
+  @include winningLine(257px, 12px);
+}
+.win3 {
+  @include winningLine(148px, -88px);
+  transform: rotate(90deg);
+}
+.win4 {
+  @include winningLine(148px, 12px);
+  transform: rotate(90deg);
+}
+.win5 {
+  @include winningLine(148px, 112px);
+  transform: rotate(90deg);
+}
+.win6 {
+  @include winningLine(153px, 12px);
+  transform: rotate(45deg);
+}
+.win7 {
+  @include winningLine(153px, 12px);
+  transform: rotate(-45deg);
 }

@@ -8,4 +8,10 @@
   font-weight: bold;
   border: 3px solid black;
   transition: background 0.2s ease-in-out;
+  &.x {
+    color: red;
+  }
+  &.o {
+    color: blue;
+  }
 }
