@@ -16,7 +16,7 @@ export class ResetGame implements AppAction {
 export class GameOver implements AppAction {
   readonly type = 'GameOver'
 
-  constructor(public payload: { winner: 'o' | 'x' | ''; winningLine: number }) {}
+  constructor(public payload: { winner: 'o' | 'x' | ''; winningLine: number | null }) {}
 }
 
 export type AppActions = GameTick | ResetGame | GameOver

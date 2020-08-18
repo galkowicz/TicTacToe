@@ -33,6 +33,9 @@ const App: React.FC = () => {
       if (gameOver) {
         dispatch({ type: 'GameOver', payload: { winner: getNextPlayer(currentPlayer), winningLine: winningLineIndex } })
       }
+      if (step === 9 && winner === '') {
+        dispatch({ type: 'GameOver', payload: { winner: '', winningLine: null } })
+      }
     }
   }, [step]) // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -6,7 +6,7 @@ export type AppState = {
   squaresArray: string[]
   step: number
   isGameOver: boolean
-  winningLine: number
+  winningLine: number | null
   readonly winner: '' | 'o' | 'x'
   readonly currentPlayer: Player
 }
@@ -17,7 +17,7 @@ export const initialState: AppState = {
   isGameOver: false,
   winner: '',
   currentPlayer: 'x',
-  winningLine: -1,
+  winningLine: null,
 }
 
 export const appReducer = (state: AppState, action: AppActions): AppState => {

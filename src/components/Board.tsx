@@ -6,7 +6,7 @@ import './Board.scss'
 type BoardProps = {
   squaresArray: string[]
   onSquareClick(index: number): void
-  winningLine: number
+  winningLine: number | null
 }
 
 const Board: React.FC<BoardProps> = ({ squaresArray, onSquareClick, winningLine }) => {
